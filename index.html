@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPU Scheduling</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('./background.jpeg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 70px;
+            text-align: center;
+            background: linear-gradient(to bottom, #3b8bf5, #f5f2f1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .container {
+            text-align: center;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 5px;
+            position: absolute;
+            left: 200px;
+            top: 130px;
+        }
+
+        h2 {
+            margin-top: 0;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 70px;
+            position: absolute;
+            top: -60px;
+            left: 68px;
+            background: linear-gradient(to bottom, #3b8bf5, #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h3 {
+            font-family: 'Arial', sans-serif;
+          
+            font-size: 28px;
+        
+            color: #fff;
+        }
+
+        button {
+            padding: 10px 90px;
+            font-size: 20px;
+            background: linear-gradient(to bottom, #66c9f7, hsl(180, 82%, 51%));
+            color: #2611e2;
+            border: none;
+            cursor: pointer;
+            border-radius: 7px;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(to left, #0056b3, #ffffff);
+            animation: fade 0.5s ease-in-out;
+        }
+
+        @keyframes fade {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.7;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>CPU Scheduling Algorithms</h1>
+    <div class="container">
+        <h2>Group #1</h2>
+        <h3>
+            1.Aliza Zahid (016)<br>
+            2.Farzeen Shahid (039)<br>
+            3.Mahnoor Sarfaraz (064)</br>
+            4.Ramsha Tariq (138)<br>
+            5.Syeda Afia Naeem (174)<br>
+            6.Urooj Khalid (181)
+        </h3>
+        <button id="scheduling-button"><b> Algo's Implementation</b></button>
+    </div>
+
+    <script>
+        document.getElementById('scheduling-button').addEventListener('click', function () {
+            window.location.href = './home.html';
+        });
+    </script>
+</body>
+
+</html>

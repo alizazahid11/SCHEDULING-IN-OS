@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scheduling Algorithms</title>
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Acme&family=Architects+Daughter&family=Bebas+Neue&family=Bree+Serif&family=Carter+One&family=Courgette&family=Crete+Round&family=DM+Serif+Display&family=Edu+NSW+ACT+Foundation:wght@400;500&family=Edu+VIC+WA+NT+Beginner&family=Kanit:wght@100&family=Lilita+One&family=Lobster&family=Mochiy+Pop+One&family=Nova+Round&family=Permanent+Marker&family=Philosopher&family=Rampart+One&family=Roboto+Mono:wght@200&family=Teko:wght@500&family=Ubuntu+Condensed&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1 class="main-heading">Scheduling Algorithms Implementation</h1>
+        <form id="algorithms-form">
+            <label for="algo"><h3 class="algo">Algorithms : </h3></label>
+            <select name="algo" id="algo" class="opts">
+                <option value="" disabled selected >Select an Algo</option>
+                <option value="sjf">Shortest Job First (SJF)</option>
+             <option value="srtf">Shortest Remaining Job First (SRTF)</option>
+                <option value="hrrn">Highest Response Ratio Next (HRRN)</option>
+            </select>
+        </form>
+        <br>
+        <table class="main-table hide">
+            <thead>
+                <tr>
+                    <th class="process-id">Process ID</th>
+                    <th class="priority hide">Priority</th>
+                    <th class="arrival-time">Arrival Time</th>
+                    <th class="process-time" colspan="1">Burst Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="process-id" rowspan="2">P1</td>
+                    <td class="priority hide" rowspan="2"><input type="number" min="1" step="1" value="1"></td>
+                    <td class="arrival-time" rowspan="2"><input type="number" min="0" step="1" value="0"> </td>
+                </tr>
+                <tr>
+                    <td class="process-time cpu process-input"><input type="number" min="1" step="1" value="1"> </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <button type="button" class="add-btn hide">Add Process</button>
+        <button type="button" class="remove-btn hide">Del Process</button>
+        <div id="context-switch-div " class="hide">
+            <br>
+           <label for="context-switch "id="cst"class="hide">Context Switch Time : </label><br>
+            <input type="number" name="Context Switch" id="context-switch"class="hide" min="0" step="1" value="0">
+        </div>
+        <div id="time-quantum" class="hide">
+            <br>
+            <label for="tq">Time Quantum : </label>
+            <input type="number" name="Time Quantum" id="tq" min="1" step="1" value="1">
+        </div>
+        <br>
+        <button type="button" id="calculate"class="hide" >Calculate</button>
+        <button type="button" id="reset"class="hide" onClick="window.location.reload();">Reset</button>
+        <div id="output"></div>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+        <script src="script.js"></script>
+
+</body>
+
+</html>
+
+</html>

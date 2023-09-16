@@ -1,0 +1,330 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-size: 17px;
+}
+
+body {
+    margin: 10px 20px;
+    background: linear-gradient(to right,#77c1d2,#00195d);
+}
+
+.instructions {
+    font-size: 14px;
+    margin: 10px 20px;
+}
+
+h1 {
+    font-size: 26px;
+}
+
+table,
+th,
+td {
+    border-collapse: collapse;
+    text-align: center;
+    border: 2px solid black;
+}
+
+td {
+    padding: 0 2px;
+}
+
+table input {
+    text-align: center;
+    border: none;
+    width: 100px;
+}
+
+.process-btn {
+    height: 5px;
+}
+
+.process-btn button {
+    height: 20px;
+    width: 20px;
+    font-size: 16px;
+    background-color: transparent;
+    border: none;
+    font-weight: bolder;
+}
+
+.hide {
+    display: none;
+}
+
+button {
+    padding: 5px;
+}
+#start-time-log{
+    color: black;
+    margin-left: 46%;
+    border-radius: 35px;
+    cursor: pointer;
+    box-shadow: 3px 3px 5px rgba(1, 12, 84, 0.5);
+    font-family: 'Acme', sans-serif;
+    margin-top: 20px;
+}
+.schedule-table-process,
+.schedule-table-process td {
+    border: 1px solid black;
+}
+
+.schedule-table-process {
+    margin-left: 6px;
+}
+
+.schedule-table-time,
+.schedule-table-time td {
+    text-align: left;
+    border: 1px solid white;
+}
+
+#algorithm-chart-div {
+    width: 80%;
+    height: 50%;
+}
+#gantt-chart {
+    height: 250px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    margin-top: 40px;
+
+   
+}
+.final-table{
+    background-color:#fff;
+    margin-left:18%;
+    margin-top:15px;
+ 
+}
+ h2{
+    color: #fff;
+    margin-left: 42%;
+    margin-top: 10px;
+    font-size: 30px;
+    font-family: 'DM Serif Display', serif;
+    letter-spacing: 1px;
+}
+h5{
+    color: black;
+    font-size: 18px;
+    margin-left: 18%;
+    margin-top: 8px;
+}
+h3{
+    color: #fff;
+    margin-left: 42%;
+    margin-top: 30px;
+    font-size: 30px;
+    font-family: 'DM Serif Display', serif;
+    letter-spacing: 1px;
+
+}
+.table{
+    color: #0632ad;
+}
+
+#output {
+    margin-top: 20px;
+}
+
+#priority-toggle-btn {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 0 0;
+    width: 60px;
+}
+
+.preferences {
+    list-style: none;
+}
+
+thead {
+    font-weight: bold;
+    background-color: #001045;
+    color: #fff;
+
+}
+
+#time-log-table-div {
+    margin-top: 10vh;
+    position: relative;
+    margin-left: 30px;
+}
+
+.time-log-table {
+    width: 10%;
+    position: absolute;
+    color: #0632ad;
+}
+
+#remain-table {
+    background-color: #fff;
+    left: 7.5%;
+}
+
+#ready-table {
+    background-color: #fff;
+    left: 32.5%;
+}
+
+#running-table {
+    background-color: #fff;
+    right: 32.5%;
+}
+
+#block-table {
+    background-color: #fff;
+    left: 45%;
+    top: 8vw;
+}
+
+#terminate-table {
+    background-color: white;
+    right: 7.5%;
+    
+}
+
+.arrow {
+    position: absolute;
+    font-size: 100px;
+    color:white;
+}
+
+#remain-ready {
+    left: 20.5%;
+    top: -62px;
+
+}
+
+#ready-running {
+    transform: rotate(180deg);
+    left: 47%;
+    top: -15px;
+    font-size: 80px;
+}
+
+#running-ready {
+    left: 47%;
+    top: -60px;
+    font-size: 80px;
+}
+
+#running-terminate {
+    right: 20.5%;
+    top: -62px;
+}
+
+#running-block {
+    transform: rotate(135deg);
+    left: 52%;
+    top: 20px;
+}
+
+#block-ready {
+    transform: rotate(225deg);
+    left: 40%;
+    top: 20px;
+}
+.main-heading{
+    margin-left: 25%;
+    font-family: 'Bebas Neue', sans-serif;
+   letter-spacing: 0.4rem;
+   font-size: 40px;
+   /* background: linear-gradient(to right, #032175, #1d9fbc);
+   -webkit-background-clip: text; */
+   color: white;
+   display: inline-block; 
+}
+.algo{
+    font-family: 'DM Serif Display', serif;
+    letter-spacing: 1px;
+    font-size: 25px;
+    margin-top: 35px;
+    color:white;
+    margin-left: 30%;
+
+}
+.hide {
+    display: none;
+}
+.opts{
+    border-radius: 40px;
+    height:35px;
+    margin-left: 35%;
+    margin-top: 32px;
+    cursor: pointer;
+    box-shadow: 3px 3px 5px rgba(1, 12, 84, 0.5);
+}
+.opts:hover{
+    background-color: rgb(227, 244, 246) ;
+}
+.main-table{
+    margin-left:36%;
+    margin-top:35px;
+    color:white
+}
+.add-btn{
+    margin-left: 40%;
+    border-radius: 35px;
+    cursor: pointer;
+    box-shadow: 3px 3px 5px rgba(1, 12, 84, 0.5);
+    font-family: 'Acme', sans-serif;
+}
+.add-btn:hover{
+    background-color: rgb(213, 241, 245);
+}
+.remove-btn{
+    border-radius: 35px;
+    cursor: pointer;
+    box-shadow: 3px 3px 5px rgba(1, 12, 84, 0.5);
+    font-family: 'Acme', sans-serif;
+}
+.remove-btn:hover{
+    background-color: rgb(213, 241, 245);
+}
+#cst{
+    color:white;
+    margin-left: 42%;
+    font-family: 'Acme', sans-serif;
+}
+#context-switch{
+    border-radius: 35px;
+    height:30px;
+    border: none;
+    margin-left: 39%;
+    margin-top: 10px;
+    cursor: pointer;
+    box-shadow: 3px 3px 5px rgba(1, 12, 84, 0.5);
+    padding-left:10px
+}
+#context-switch:hover{
+    background-color: rgb(227, 244, 246) ;
+}
+#calculate{
+    margin-left: 40%;
+    border-radius: 35px;
+    cursor: pointer;
+    box-shadow: 3px 3px 5px rgba(1, 12, 84, 0.5);
+    font-family: 'Acme', sans-serif;
+    width:7%;
+    margin-top: 10px;
+}
+#calculate:hover{
+    background-color: rgb(213, 241, 245);
+}
+#reset{
+    border-radius: 35px;
+    cursor: pointer;
+    box-shadow: 3px 3px 5px rgba(1, 12, 84, 0.5);
+    font-family: 'Acme', sans-serif;
+    width:7%;
+
+}
+#reset:hover{
+    background-color: rgb(213, 241, 245);
+}
+#output{
+    align-items: center;
+}
