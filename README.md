@@ -1,36 +1,20 @@
 # CPU Scheduling Algorithms
 
 ## Functionalities
-- 9 Algorithms are implemented.
+- 3 Algorithms are implemented.
 - Each process can have different number of CPU Burst Time and I/O Burst Time.
-- Gantt Chart and Timeline Chart for the given Schedule.
+- Gantt  Chart for the given Schedule.
 - Context Switching Time.
 - Animation of the Time Log.
-- Comparison for Round Robin Algorithm for all time quantum.
-- Comparison between all the algorithms wrt Average Completion Time, Turn Around Time, Waiting Time and Response Time.
+- Comparison between all the algorithms wrt Average Completion Time,Avg wait time, Turn Around Time, Waiting Time and Response Time.
 
 
 ### Different Criteria and Algorithms
-- The first process arrived in the ready queue is processed first.
-  - **First Come First Serve (FCFS)**
     >Non-Preemptive
 - The shortest job in the ready queue is processed first.
   - **Shortest Job First (SJF)**
     >Non-Preemptive
   - **Shortest Remaining Job First (SRJF)**
-    >Preemptive
-- The longest job in the ready queue is processed first.
-  - **Longest Job First (LJF)**
-    >Non-Preemptive
-  - **Longest Remaining Job First (LRJF)**
-    >Preemptive
-- The highest priority job in the ready queue is processed first.
-  - **Priority Non-Preemptive (PNP)**
-    >Non-Preemptive
-  - **Priority Preemptive(PP)**
-    >Preemptive
-- The jobs in the ready queue are given a fixed time quantum.
-  - **Round Robin (RR)**
     >Preemptive
 - The job with the highest response ratio in the ready queue is processed first.
   - **Highest Response Ratio Next (HRRN)**
