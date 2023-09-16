@@ -1,7 +1,6 @@
 let selectedAlgorithm = document.getElementById('algo');
 selectedAlgorithm.onchange = () => {
-    checkTimeQuantumInput();
-    checkPriorityCell();
+   
 };
 document.getElementById('algo').addEventListener('change', function () {
     var selectedOption = this.value;
@@ -59,8 +58,6 @@ function inputOnChange() {
 }
 inputOnChange();
 let process = 1;
-//resize burst time rows size on +/-
-
 function gcd(x, y) {
     while (y) {
         let t = y;
@@ -101,27 +98,22 @@ function updateColspan() { //update burst time cell colspan
         }
     }
 }
-
 function addProcess() {
     process++;
     let rowHTML1 = `
                           <td class="process-id" rowspan="2">P${process}</td>
                           <td class="priority hide" rowspan="2"><input type="number" min="1" step="1" value="1"></td>
                           <td class="arrival-time" rowspan="2"><input type="number" min="0" step="1" value="0"> </td>
-                       
-                      `;
+                       `;
     let rowHTML2 = `
                            <td class="process-time cpu process-input"><input type="number" min="1" step="1" value="1"> </td>
                       `;
     let table = document.querySelector(".main-table tbody");
     table.insertRow(table.rows.length).innerHTML = rowHTML1;
     table.insertRow(table.rows.length).innerHTML = rowHTML2;
-    checkPriorityCell();
-    addremove();
-    updateColspan();
+     updateColspan();
     inputOnChange();
 }
-
 function deleteProcess() {
     let table = document.querySelector(".main-table");
     if (process > 1) {
@@ -203,7 +195,6 @@ function setAlgorithmNameType(input, algorithm) {
        
     }
 }
-
 function setInput(input) {
     for (let i = 1; i <= process; i++) {
         input.processId.push(i - 1);
@@ -259,7 +250,7 @@ function reduceSchedule(schedule) {
     return newSchedule;
 }
 
-function reduceTimeLog(timeLog) {
+function reduceTimeLog(timeLog) { //reduceTimeLog function takes a time log as input and reduces it by removing consecutive duplicate entries, leaving only the events where transitions occur. 
     let timeLogLength = timeLog.length;
     let newTimeLog = [],
         j = 0;
@@ -305,22 +296,22 @@ function setOutput(input, output) {
         output.turnAroundTime[i] = output.completionTime[i] - input.arrivalTime[i];
         output.waitingTime[i] = output.turnAroundTime[i] - input.totalBurstTime[i];
     }
-    output.schedule = reduceSchedule(output.schedule);
-    output.timeLog = reduceTimeLog(output.timeLog);
-    output.averageTimes = outputAverageTimes(output);
+    output.schedule = reduceSchedule(output.schedule);//reduces the scheduling information in some way, perhaps removing redundancy or simplifying the schedule.
+    output.timeLog = reduceTimeLog(output.timeLog);// reduces the time log information.
+    output.averageTimes = outputAverageTimes(output);// calculates average times based on the output data and returns them.
 }
 
 function getDate(sec) {
-    return (new Date(0, 0, 0, 0, sec / 60, sec % 60));
+    return (new Date(0, 0, 0, 0, sec / 60, sec % 60));//The getDate function is used to convert a time value represented in seconds into a JavaScript Date object
 }
 
-function showGanttChart(output, outputDiv) {
+function showGanttChart(output, outputDiv) {//output (which contains scheduling data),outputDiv (the HTML element where the Gantt chart will be displayed).
     let ganttChartHeading = document.createElement("h3");
     ganttChartHeading.innerHTML = "Gantt Chart";
     outputDiv.appendChild(ganttChartHeading);
     let ganttChartData = [];
     let startGantt = 0;
-    output.schedule.forEach((element) => {
+    output.schedule.forEach((element) => {//contains scheduling information for processes 
         if (element[0] == -2) { //context switch
             ganttChartData.push([
                 "Time",
@@ -367,7 +358,7 @@ function showGanttChart(output, outputDiv) {
         dataTable.addColumn({ type: "date", id: "Start" });
         dataTable.addColumn({ type: "date", id: "End" });
         dataTable.addRows(ganttChartData);
-        let ganttWidth = '100%';
+        let ganttWidth = '80%';
         if (startGantt >= 20) {
             ganttWidth = 0.05 * startGantt * screen.availWidth;
         }
@@ -433,152 +424,6 @@ function showFinalTable(input, output, outputDiv) {
     outputDiv.appendChild(cpu);
 }
 
-function toggleTimeLogArrowColor(timeLog, color) {
-    let timeLogMove = ['remain-ready', 'ready-running', 'running-terminate', 'running-ready', 'running-block', 'block-ready'];
-    timeLog.move.forEach(element => {
-        document.getElementById(timeLogMove[element]).style.color = color;
-    });
-}
-
-function nextTimeLog(timeLog) {
-    let timeLogTableDiv = document.getElementById("time-log-table-div");
-
-    let arrowHTML = `
-    <p id = "remain-ready" class = "arrow">&rarr;</p>
-    <p id = "ready-running" class = "arrow">&#10554;</p>
-    <p id = "running-ready" class = "arrow">&#10554;</p>
-    <p id = "running-terminate" class = "arrow">&rarr;</p>
-    <p id = "running-block" class = "arrow">&rarr;</p>
-    <p id = "block-ready" class = "arrow">&rarr;</p>
-    `;
-    timeLogTableDiv.innerHTML = arrowHTML;
-
-    let remainTable = document.createElement("table");
-    remainTable.id = "remain-table";
-    remainTable.className = 'time-log-table';
-    let remainTableHead = remainTable.createTHead();
-    let remainTableHeadRow = remainTableHead.insertRow(0);
-    let remainTableHeading = remainTableHeadRow.insertCell(0);
-    remainTableHeading.innerHTML = "Remain";
-    let remainTableBody = remainTable.createTBody();
-    for (let i = 0; i < timeLog.remain.length; i++) {
-        let remainTableBodyRow = remainTableBody.insertRow(i);
-        let remainTableValue = remainTableBodyRow.insertCell(0);
-        remainTableValue.innerHTML = 'P' + (timeLog.remain[i] + 1);
-    }
-    timeLogTableDiv.appendChild(remainTable);
-
-    let readyTable = document.createElement("table");
-    readyTable.id = "ready-table";
-    readyTable.className = 'time-log-table';
-    let readyTableHead = readyTable.createTHead();
-    let readyTableHeadRow = readyTableHead.insertRow(0);
-    let readyTableHeading = readyTableHeadRow.insertCell(0);
-    readyTableHeading.innerHTML = "Ready";
-    let readyTableBody = readyTable.createTBody();
-    for (let i = 0; i < timeLog.ready.length; i++) {
-        let readyTableBodyRow = readyTableBody.insertRow(i);
-        let readyTableValue = readyTableBodyRow.insertCell(0);
-        readyTableValue.innerHTML = 'P' + (timeLog.ready[i] + 1);
-    }
-    timeLogTableDiv.appendChild(readyTable);
-
-    let runningTable = document.createElement("table");
-    runningTable.id = "running-table";
-    runningTable.className = 'time-log-table';
-    let runningTableHead = runningTable.createTHead();
-    let runningTableHeadRow = runningTableHead.insertRow(0);
-    let runningTableHeading = runningTableHeadRow.insertCell(0);
-    runningTableHeading.innerHTML = "Running";
-    let runningTableBody = runningTable.createTBody();
-    for (let i = 0; i < timeLog.running.length; i++) {
-        let runningTableBodyRow = runningTableBody.insertRow(i);
-        let runningTableValue = runningTableBodyRow.insertCell(0);
-        runningTableValue.innerHTML = 'P' + (timeLog.running[i] + 1);
-    }
-    timeLogTableDiv.appendChild(runningTable);
-
-    let blockTable = document.createElement("table");
-    blockTable.id = "block-table";
-    blockTable.className = 'time-log-table';
-    let blockTableHead = blockTable.createTHead();
-    let blockTableHeadRow = blockTableHead.insertRow(0);
-    let blockTableHeading = blockTableHeadRow.insertCell(0);
-    blockTableHeading.innerHTML = "Block";
-    let blockTableBody = blockTable.createTBody();
-    for (let i = 0; i < timeLog.block.length; i++) {
-        let blockTableBodyRow = blockTableBody.insertRow(i);
-        let blockTableValue = blockTableBodyRow.insertCell(0);
-        blockTableValue.innerHTML = 'P' + (timeLog.block[i] + 1);
-    }
-    timeLogTableDiv.appendChild(blockTable);
-
-    let terminateTable = document.createElement("table");
-    terminateTable.id = "terminate-table";
-    terminateTable.className = 'time-log-table';
-    let terminateTableHead = terminateTable.createTHead();
-    let terminateTableHeadRow = terminateTableHead.insertRow(0);
-    let terminateTableHeading = terminateTableHeadRow.insertCell(0);
-    terminateTableHeading.innerHTML = "Terminate";
-    let terminateTableBody = terminateTable.createTBody();
-    for (let i = 0; i < timeLog.terminate.length; i++) {
-        let terminateTableBodyRow = terminateTableBody.insertRow(i);
-        let terminateTableValue = terminateTableBodyRow.insertCell(0);
-        terminateTableValue.innerHTML = 'P' + (timeLog.terminate[i] + 1);
-    }
-    timeLogTableDiv.appendChild(terminateTable);
-    document.getElementById("time-log-time").innerHTML = "Time : " + timeLog.time;
-}
-
-function showTimeLog(output, outputDiv) {
-    reduceTimeLog(output.timeLog);
-    let timeLogDiv = document.createElement("div");
-    timeLogDiv.id = "time-log-div";
-    timeLogDiv.style.height = (15 * process) + 300 + "px";
-    let startTimeLogButton = document.createElement("button");
-    startTimeLogButton.id = "start-time-log";
-    startTimeLogButton.innerHTML = "Start Time Log";
-    timeLogDiv.appendChild(startTimeLogButton);
-    outputDiv.appendChild(timeLogDiv);
-
-    document.querySelector("#start-time-log").onclick = () => {
-        timeLogStart = 1;
-        let timeLogDiv = document.getElementById("time-log-div");
-        let timeLogOutputDiv = document.createElement("div");
-        timeLogOutputDiv.id = "time-log-output-div";
-
-        let timeLogTableDiv = document.createElement("div");
-        timeLogTableDiv.id = "time-log-table-div";
-
-        let timeLogTime = document.createElement("p");
-        timeLogTime.id = "time-log-time";
-
-        timeLogOutputDiv.appendChild(timeLogTableDiv);
-        timeLogOutputDiv.appendChild(timeLogTime);
-        timeLogDiv.appendChild(timeLogOutputDiv);
-        let index = 0;
-        let timeLogInterval = setInterval(() => {
-            nextTimeLog(output.timeLog[index]);
-            if (index != output.timeLog.length - 1) {
-                setTimeout(() => {
-                    toggleTimeLogArrowColor(output.timeLog[index], 'red');
-                    setTimeout(() => {
-                        toggleTimeLogArrowColor(output.timeLog[index], 'black');
-                    }, 600);
-                }, 200);
-            }
-            index++;
-            if (index == output.timeLog.length) {
-                clearInterval(timeLogInterval);
-            }
-            document.getElementById("calculate").onclick = () => {
-                clearInterval(timeLogInterval);
-                document.getElementById("time-log-output-div").innerHTML = "";
-                calculateOutput();
-            }
-        }, 1000);
-    };
-}
 function showOutput(input, output, outputDiv) {
     showGanttChart(output, outputDiv);
     outputDiv.insertAdjacentHTML("beforeend", "<hr>");
