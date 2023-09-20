@@ -44,7 +44,7 @@ function inputOnChange() {
                     } else {
                         input.value = inputVal;
                     }
-                } else //min 1 : time quantum, priority, burst time
+                } else //min 1 :  burst time
                 {
                     if (!isInt || (isInt && inputVal < 1)) {
                         input.value = 1;
@@ -142,7 +142,7 @@ class Input {
         this.totalBurstTime = [];
         this.algorithm = "";
         this.algorithmType = "";
-        this.timeQuantum = 0;
+        // this.timeQuantum = 0;
         this.contextSwitch = 0;
     }
 }
@@ -178,7 +178,7 @@ class TimeLog {
         this.running = [];
         this.block = [];
         this.terminate = [];
-        this.move = []; //0-remain->ready 1-ready->running 2-running->terminate 3-running->ready 4-running->block 5-block->ready
+        this.move = []; 
     }
 }
 
@@ -220,7 +220,7 @@ function setInput(input) {
         });
     });
     setAlgorithmNameType(input, selectedAlgorithm.value);
-    input.timeQuantum = Number(document.querySelector("#tq").value);
+    // input.timeQuantum = Number(document.querySelector("#tq").value);
 }
 
 function setUtility(input, utility) {
@@ -267,11 +267,7 @@ function reduceTimeLog(timeLog) { //reduceTimeLog function takes a time log as i
 }
 
 function outputAverageTimes(output) {
-    let avgct = 0;
-    output.completionTime.forEach((element) => {
-        avgct += element;
-    });
-    avgct /= process;
+
     let avgtat = 0;
     output.turnAroundTime.forEach((element) => {
         avgtat += element;
@@ -282,12 +278,8 @@ function outputAverageTimes(output) {
         avgwt += element;
     });
     avgwt /= process;
-    let avgrt = 0;
-    output.responseTime.forEach((element) => {
-        avgrt += element;
-    });
-    avgrt /= process;
-    return [avgct, avgtat, avgwt, avgrt];
+   
+    return [ avgtat, avgwt];
 }
 
 function setOutput(input, output) {
@@ -396,7 +388,7 @@ function showFinalTable(input, output, outputDiv) {
     });
     let tbody = table.createTBody();
     for (let i = 0; i < process; i++) {
-        let row = tbody.insertRow(i);
+        let row = tbody.insertRow(i);//This row will hold the data for a single process.
         let cell = row.insertCell(0);
         cell.innerHTML = "P" + (i + 1);
         cell = row.insertCell(1);
@@ -428,30 +420,26 @@ function showOutput(input, output, outputDiv) {
     showGanttChart(output, outputDiv);
     outputDiv.insertAdjacentHTML("beforeend", "<hr>");
     showFinalTable(input, output, outputDiv);
-
-    // Calculate and display average waiting time and average turnaround time
+ // Calculate and display average waiting time and average turnaround time
     let avgWaitingTime = calculateAverageWaitingTime(output);
     let avgTurnaroundTime = calculateAverageTurnaroundTime(output);
-
-    let avgWaitTimeElement = document.createElement("h5");
+let avgWaitTimeElement = document.createElement("h5");
     avgWaitTimeElement.innerHTML = "Average Waiting Time: " + avgWaitingTime.toFixed(2);
     outputDiv.appendChild(avgWaitTimeElement);
-
-    let avgTurnaroundTimeElement = document.createElement("h5");
+let avgTurnaroundTimeElement = document.createElement("h5");
     avgTurnaroundTimeElement.innerHTML = "Average Turnaround Time: " + avgTurnaroundTime.toFixed(2);
     outputDiv.appendChild(avgTurnaroundTimeElement);
-
-    outputDiv.insertAdjacentHTML("beforeend", "<hr>");
-    showTimeLog(output, outputDiv);
-    outputDiv.insertAdjacentHTML("beforeend", "<hr>");
+   outputDiv.insertAdjacentHTML("beforeend", "<hr>");
+    // showTimeLog(output, outputDiv);
+    // outputDiv.insertAdjacentHTML("beforeend", "<hr>");
 }
 function CPUScheduler(input, utility, output) {
     function updateReadyQueue(currentTimeLog) {
-        let candidatesRemain = currentTimeLog.remain.filter((element) => input.arrivalTime[element] <= currentTimeLog.time);
+        let candidatesRemain = currentTimeLog.remain.filter((element) => input.arrivalTime[element] <= currentTimeLog.time);//These elements represent processes that have arrived and are candidates to be added to the ready queue.
         if (candidatesRemain.length > 0) {
             currentTimeLog.move.push(0);
         }
-        let candidatesBlock = currentTimeLog.block.filter((element) => utility.returnTime[element] <= currentTimeLog.time);
+        let candidatesBlock = currentTimeLog.block.filter((element) => utility.returnTime[element] <= currentTimeLog.time);//These elements represent processes that have completed execution and are candidates to be added to the ready queue.
         if (candidatesBlock.length > 0) {
             currentTimeLog.move.push(5);
         }
@@ -461,15 +449,15 @@ function CPUScheduler(input, utility, output) {
             moveElement(element, currentTimeLog.remain, currentTimeLog.ready);
             moveElement(element, currentTimeLog.block, currentTimeLog.ready);
         });
-        output.timeLog.push(JSON.parse(JSON.stringify(currentTimeLog)));
-        currentTimeLog.move = [];
+        // output.timeLog.push(JSON.parse(JSON.stringify(currentTimeLog)));
+        // currentTimeLog.move = [];
     }
 
-    function moveElement(value, from, to) { //if present in from and not in to
+    function moveElement(value, from, to) { //move a specific value from one array to another
         let index = from.indexOf(value);
         if (index != -1) {
             from.splice(index, 1);
-        }
+        }//It removes the value from the from array and adds it to the to array, but only if the value is present in from and not already present in to.
         if (to.indexOf(value) == -1) {
             to.push(value);
         }
@@ -480,28 +468,29 @@ function CPUScheduler(input, utility, output) {
     currentTimeLog.move = [];
     currentTimeLog.time++;
     let lastFound = -1;
-    while (utility.done.some((element) => element == false)) {
+    while (utility.done.some((element) => element == false)) {//This array likely keeps track of whether each process is done or not.
         updateReadyQueue(currentTimeLog);
-        let found = -1;
-        if (currentTimeLog.running.length == 1) {
+        let found = -1;//this code block determines the next process to run based on the selected scheduling algorithm
+        if (currentTimeLog.running.length == 1) { 
             found = currentTimeLog.running[0];
         } else if (currentTimeLog.ready.length > 0) {
             if (input.algorithm == 'rr') {
-                found = currentTimeLog.ready[0];
-                utility.remainingTimeRunning[found] = Math.min(utility.remainingProcessTime[found][utility.currentProcessIndex[found]], input.timeQuantum);
+                // found = currentTimeLog.ready[0];
+                // utility.remainingTimeRunning[found] = Math.min(utility.remainingProcessTime[found][utility.currentProcessIndex[found]], input.timeQuantum);
+                alert("please enter another algo")
             } else {
                 let candidates = currentTimeLog.ready;
-                candidates.sort((a, b) => a - b);
+                candidates.sort((a, b) => a - b);//This line sorts the candidates array in ascending order
                 candidates.sort((a, b) => {
                     switch (input.algorithm) {
                         
                         case 'sjf':
                         case 'srtf':
-                            return utility.remainingBurstTime[a] - utility.remainingBurstTime[b];
+                            return utility.remainingBurstTime[a] - utility.remainingBurstTime[b];//The process with the shorter remaining burst time will come first.
                         case 'hrrn':
                             function responseRatio(id) {
                                 let s = utility.remainingBurstTime[id];
-                                let w = currentTimeLog.time - input.arrivalTime[id] - s;
+                                let w = currentTimeLog.time - input.arrivalTime[id] - s;//the process with the higher response ratio will come first in the sorted array.
                                 return 1 + w / s;
                             }
                             return responseRatio(b) - responseRatio(a);
@@ -518,8 +507,8 @@ function CPUScheduler(input, utility, output) {
                     }
                 }
             }
-            moveElement(found, currentTimeLog.ready, currentTimeLog.running);
-            currentTimeLog.move.push(1);
+            moveElement(found, currentTimeLog.ready, currentTimeLog.running);//his signifies that the process is now executing.
+            currentTimeLog.move.push(1);//process has been moved from the ready queue to the running state.
             output.timeLog.push(JSON.parse(JSON.stringify(currentTimeLog)));
             currentTimeLog.move = [];
             if (utility.start[found] == false) {
@@ -533,7 +522,7 @@ function CPUScheduler(input, utility, output) {
             utility.remainingProcessTime[found][utility.currentProcessIndex[found]]--;
             utility.remainingBurstTime[found]--;
 
-            if (input.algorithm == 'rr') {
+            if (input.algorithm == 'rr') {//this code block handles the execution of processes based on the selected scheduling algorithm, manages their state transitions, records execution times.
                 utility.remainingTimeRunning[found]--;
                 if (utility.remainingTimeRunning[found] == 0) {
                     if (utility.remainingProcessTime[found][utility.currentProcessIndex[found]] == 0) {
@@ -567,8 +556,8 @@ function CPUScheduler(input, utility, output) {
                         output.contextSwitches++;
                     }
                 }
-            } else { //preemptive and non-preemptive
-                if (utility.remainingProcessTime[found][utility.currentProcessIndex[found]] == 0) {
+            } else { //preemptive and non-preemptive //this code block handles the execution of processes based on the selected scheduling algorithm, preemptively or non-preemptively. It manages state transitions, records execution times, handles context switches, and maintains lastFound to keep track of the previously executed process for context switch checks.
+                if (utility.remainingProcessTime[found][utility.currentProcessIndex[found]] == 0) {//reached zero. If it has, it means that the current burst of the process has been fully executed.
                     utility.currentProcessIndex[found]++;
                     if (utility.currentProcessIndex[found] == input.processTimeLength[found]) {
                         utility.done[found] = true;
