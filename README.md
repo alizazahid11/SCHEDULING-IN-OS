@@ -1,6 +1,6 @@
 # CPU Scheduling Algorithms
 ## ScreenShots
-![Alt text](https://github.com/alizazahid11/SCHEDULING-IN-OS/blob/main/Assets/os1.PNG?raw=true)
+
 ![Alt text](https://github.com/alizazahid11/SCHEDULING-IN-OS/blob/main/Assets/os2.png?raw=true)
 ![Alt text](https://github.com/alizazahid11/SCHEDULING-IN-OS/blob/main/Assets/os3.PNG?raw=true)
 ![Alt text](https://github.com/alizazahid11/SCHEDULING-IN-OS/blob/main/Assets/os4.PNG?raw=true)
