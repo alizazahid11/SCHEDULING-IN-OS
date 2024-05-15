@@ -1,11 +1,15 @@
 # CPU Scheduling Algorithms
+## ScreenShots
+![Alt text](https://github.com/alizazahid11/SCHEDULING-IN-OS/blob/main/Assets/os1.PNG?raw=true)
+![Alt text](https://github.com/alizazahid11/SCHEDULING-IN-OS/blob/main/Assets/os2.png?raw=true)
+![Alt text](https://github.com/alizazahid11/SCHEDULING-IN-OS/blob/main/Assets/os3.PNG?raw=true)
+![Alt text](https://github.com/alizazahid11/SCHEDULING-IN-OS/blob/main/Assets/os4.PNG?raw=true)
 
 ## Functionalities
 - 3 Algorithms are implemented.
 - Each process can have different number of CPU Burst Time and I/O Burst Time.
 - Gantt  Chart for the given Schedule.
 - Context Switching Time.
-- Animation of the Time Log.
 - Comparison between all the algorithms wrt Average Completion Time,Avg wait time, Turn Around Time, Waiting Time and Response Time.
 
 
